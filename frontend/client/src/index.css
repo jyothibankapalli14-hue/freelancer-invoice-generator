@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@media print {
+
+  button,
+  input,
+  select,
+  label {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+}
+@media (max-width: 768px) {
+
+  .menu-btn {
+    display: block !important;
+  }
+
+  .nav-links {
+    display: block !important;
+
+    margin-top: 10px;
+  }
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
