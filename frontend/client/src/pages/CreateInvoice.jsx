@@ -2,6 +2,10 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import {
+  createInvoice,
+} from "../api/invoiceApi";
+
 function CreateInvoice({ invoices, setInvoices }) {
 
   const navigate = useNavigate();
@@ -23,7 +27,7 @@ function CreateInvoice({ invoices, setInvoices }) {
   };
 
   // Submit Form
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
 
@@ -56,10 +60,22 @@ function CreateInvoice({ invoices, setInvoices }) {
   date: new Date().toLocaleDateString(),
 };
     // Save Invoice
-    setInvoices([
-      ...invoices,
-      newInvoice,
-    ]);
+   try {
+
+  const res =
+    await createInvoice(
+      newInvoice
+    );
+
+  setInvoices([
+    ...invoices,
+    res.data,
+  ]);
+
+} catch (error) {
+
+  console.log(error);
+}
 
     // Clear Form
     setInvoice({

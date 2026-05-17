@@ -26,6 +26,10 @@ import Register from "./pages/Register";
 
 import Settings from "./pages/Settings";
 
+import {
+  getInvoices,
+} from "./api/invoiceApi";
+
 function AppContent() {
 
   const location = useLocation();
@@ -52,12 +56,25 @@ function AppContent() {
   // Save Invoices
   useEffect(() => {
 
-    localStorage.setItem(
-      "invoices",
-      JSON.stringify(invoices)
-    );
+  fetchInvoices();
 
-  }, [invoices]);
+}, []);
+
+const fetchInvoices =
+  async () => {
+
+    try {
+
+      const res =
+        await getInvoices();
+
+      setInvoices(res.data);
+
+    } catch (error) {
+
+      console.log(error);
+    }
+  };
 
   const [companyInfo, setCompanyInfo] = useState({
 

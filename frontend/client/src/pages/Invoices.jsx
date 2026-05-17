@@ -2,7 +2,9 @@ import { useState } from "react";
 
 import jsPDF from "jspdf";
 
-
+import {
+  deleteInvoice as deleteInvoiceAPI,
+} from "../api/invoiceApi";
 
 function Invoices({
 
@@ -27,19 +29,29 @@ function Invoices({
 });
 
   // Delete Invoice
-  const deleteInvoice = (id) => {
+  const deleteInvoice = async (id) => {
 
-    const filteredInvoices = invoices.filter(
-      (invoice) => invoice.id !== id
-    );
+  try {
+
+    await deleteInvoiceAPI(id);
+
+    const filteredInvoices =
+      invoices.filter(
+        (invoice) =>
+          invoice._id !== id
+      );
 
     setInvoices(filteredInvoices);
-  };
 
+  } catch (error) {
+
+    console.log(error);
+  }
+};
   // Start Edit
   const startEdit = (invoice) => {
 
-    setEditingInvoice(invoice.id);
+    setEditingInvoice(invoice._id);
 
     setUpdatedInvoice({
       client: invoice.client,
@@ -201,7 +213,7 @@ doc.text(
   );
 
   doc.text(
-    `INV-${invoice.id}`,
+    `INV-${invoice._id}`,
     155,
     82
   );
@@ -564,14 +576,14 @@ doc.text(
             {filteredInvoices.map((invoice) => (
 
               <tr
-                key={invoice.id}
+                key={invoice._id}
                 className="border-b dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 transition"
               >
 
                 {/* Client */}
                 <td className="p-4">
 
-                  {editingInvoice === invoice.id ? (
+                  {editingInvoice === invoice._id ? (
 
                     <input
                       type="text"
@@ -600,7 +612,7 @@ doc.text(
                 {/* Address */}
 <td className="p-4">
 
-  {editingInvoice === invoice.id ? (
+  {editingInvoice === invoice._id ? (
 
     <input
       type="text"
@@ -631,7 +643,7 @@ doc.text(
                 {/* Amount */}
                 <td className="p-4">
 
-                  {editingInvoice === invoice.id ? (
+                  {editingInvoice === invoice._id ? (
 
                     <input
                       type="number"
@@ -660,7 +672,7 @@ doc.text(
                 {/* Status */}
                 <td className="p-4">
 
-                  {editingInvoice === invoice.id ? (
+                  {editingInvoice === invoice._id ? (
 
                     <select
                       name="status"
@@ -724,10 +736,10 @@ doc.text(
                 {/* Buttons */}
                 <td className="p-4 flex flex-wrap gap-2">
 
-                  {editingInvoice === invoice.id ? (
+                  {editingInvoice === invoice._id ? (
 
                     <button
-                      onClick={() => saveInvoice(invoice.id)}
+                      onClick={() => saveInvoice(invoice._id)}
                       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
                     >
 
@@ -749,7 +761,7 @@ doc.text(
                   )}
 
                   <button
-                    onClick={() => deleteInvoice(invoice.id)}
+                    onClick={() => deleteInvoice(invoice._id)}
                     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
                   >
 
