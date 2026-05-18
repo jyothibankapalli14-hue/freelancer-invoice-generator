@@ -28,3 +28,15 @@ export const deleteInvoice =
       `${API}/${id}`
     );
   };
+
+  // Update Invoice
+export const updateInvoice =
+  async (id, updatedData) => {
+
+    return await axios.put(
+
+      `${API}/${id}`,
+
+      updatedData
+    );
+  };

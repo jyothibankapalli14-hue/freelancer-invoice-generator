@@ -1,19 +1,26 @@
 const Invoice =
   require("../models/Invoice");
 
-// Create Invoice
-const createInvoice =
+// Update Invoice
+const updateInvoice =
   async (req, res) => {
 
     try {
 
-      const invoice =
-        await Invoice.create(
-          req.body
+      const updatedInvoice =
+        await Invoice.findByIdAndUpdate(
+
+          req.params.id,
+
+          req.body,
+
+          {
+            new: true,
+          }
         );
 
-      res.status(201).json(
-        invoice
+      res.status(200).json(
+        updatedInvoice
       );
 
     } catch (error) {
@@ -75,4 +82,6 @@ module.exports = {
   getInvoices,
 
   deleteInvoice,
+
+  updateInvoice,
 };

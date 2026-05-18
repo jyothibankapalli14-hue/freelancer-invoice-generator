@@ -6,6 +6,10 @@ import {
   deleteInvoice as deleteInvoiceAPI,
 } from "../api/invoiceApi";
 
+import {
+  updateInvoice as updateInvoiceAPI,
+} from "../api/invoiceApi";
+
 function Invoices({
 
   invoices,
@@ -28,13 +32,14 @@ function Invoices({
   status: "",
 });
 
-  // Delete Invoice
   const deleteInvoice = async (id) => {
 
   try {
 
+    // Delete from MongoDB
     await deleteInvoiceAPI(id);
 
+    // Update UI
     const filteredInvoices =
       invoices.filter(
         (invoice) =>
@@ -71,20 +76,36 @@ function Invoices({
   };
 
   // Save Invoice
-  const saveInvoice = (id) => {
+  const saveUpdatedInvoice =
+  async (id) => {
 
-    const updatedInvoices = invoices.map((invoice) =>
+    try {
 
-      invoice.id === id
-        ? { ...invoice, ...updatedInvoice }
-        : invoice
-    );
+      const res =
+        await updateInvoiceAPI(
+          id,
+          updatedInvoice
+        );
 
-    setInvoices(updatedInvoices);
+      const updatedInvoices =
+        invoices.map((invoice) =>
 
-    setEditingInvoice(null);
+          invoice._id === id
+            ? res.data
+            : invoice
+        );
+
+      setInvoices(
+        updatedInvoices
+      );
+
+      setEditingInvoice(null);
+
+    } catch (error) {
+
+      console.log(error);
+    }
   };
-
   // Download PDF
   const downloadPDF = (invoice) => {
 

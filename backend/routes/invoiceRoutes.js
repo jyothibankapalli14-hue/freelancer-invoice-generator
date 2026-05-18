@@ -12,6 +12,8 @@ const {
 
   deleteInvoice,
 
+  updateInvoice,
+
 } = require(
   "../controllers/invoiceController"
 );
@@ -32,6 +34,11 @@ router.get(
 router.delete(
   "/:id",
   deleteInvoice
+);
+
+router.put(
+  "/:id",
+  updateInvoice
 );
 
 module.exports = router;
