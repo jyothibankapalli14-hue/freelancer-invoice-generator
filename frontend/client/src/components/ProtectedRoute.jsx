@@ -1,14 +1,15 @@
 import { Navigate } from "react-router-dom";
 
-import { auth } from "../firebase";
+function ProtectedRoute({ children, user, allowedRoles }) {
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-function ProtectedRoute({ children }) {
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/invoices" replace />;
+  }
 
-  const user = auth.currentUser;
-
-  return user
-    ? children
-    : <Navigate to="/login" />;
+  return children;
 }
 
 export default ProtectedRoute;
