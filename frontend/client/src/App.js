@@ -35,10 +35,6 @@ const defaultProfile = {
   logo: "",
 };
 
-import {
-  getInvoices,
-} from "./api/invoiceApi";
-
 function AppContent() {
   const location = useLocation();
   const [darkMode, setDarkMode] = useState(() => {
@@ -57,19 +53,14 @@ function AppContent() {
   const [profile, setProfile] = useState(defaultProfile);
   const [appReady, setAppReady] = useState(false);
 
-  const syncTokenToStorage = () => {
+  useEffect(() => {
     if (token) {
       localStorage.setItem("invoice_token", token);
     } else {
       localStorage.removeItem("invoice_token");
     }
-  };
-
-  useEffect(() => {
-    syncTokenToStorage();
   }, [token]);
 
-<<<<<<< HEAD
   useEffect(() => {
     const loadUser = async () => {
       if (!token) {
@@ -182,38 +173,6 @@ function AppContent() {
       </div>
     );
   }
-=======
-  fetchInvoices();
-
-}, []);
-
-const fetchInvoices =
-  async () => {
-
-    try {
-
-      const res =
-        await getInvoices();
-
-      setInvoices(res.data);
-
-    } catch (error) {
-
-      console.log(error);
-    }
-  };
-
-  const [companyInfo, setCompanyInfo] = useState({
-
-  companyName: "Freelancer Invoice",
-
-  email: "support@invoiceapp.com",
-
-  phone: "+91 9876543210",
-
-  address: "Vizag, Andhra Pradesh",
-});
->>>>>>> 22075725b887ba89c918bccc696b3e1f20434606
 
   return (
     <div className={darkMode ? "dark flex" : "flex"}>

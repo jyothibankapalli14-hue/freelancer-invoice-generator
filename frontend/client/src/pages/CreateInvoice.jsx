@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-<<<<<<< HEAD
 function CreateInvoice({ invoices, setInvoices, clients, profile }) {
-=======
-import {
-  createInvoice,
-} from "../api/invoiceApi";
-
-function CreateInvoice({ invoices, setInvoices }) {
-
->>>>>>> 22075725b887ba89c918bccc696b3e1f20434606
   const navigate = useNavigate();
   const initialInvoice = {
     clientName: "",
@@ -43,17 +34,12 @@ function CreateInvoice({ invoices, setInvoices }) {
     });
   };
 
-<<<<<<< HEAD
   const handleItemChange = (index, field, value) => {
     const updatedItems = invoice.items.map((item, idx) =>
       idx === index ? { ...item, [field]: field === "description" ? value : Number(value) } : item
     );
     setInvoice({ ...invoice, items: updatedItems });
   };
-=======
-  // Submit Form
-  const handleSubmit = async (e) => {
->>>>>>> 22075725b887ba89c918bccc696b3e1f20434606
 
   const addItem = () => {
     setInvoice({
@@ -67,43 +53,6 @@ function CreateInvoice({ invoices, setInvoices }) {
       return;
     }
 
-<<<<<<< HEAD
-=======
-    // Create New Invoice
-   const newInvoice = {
-
-  id: Date.now(),
-
-  client: invoice.client,
-
-  address: invoice.address,
-
-  amount: invoice.amount,
-
-  status: invoice.status,
-
-  date: new Date().toLocaleDateString(),
-};
-    // Save Invoice
-   try {
-
-  const res =
-    await createInvoice(
-      newInvoice
-    );
-
-  setInvoices([
-    ...invoices,
-    res.data,
-  ]);
-
-} catch (error) {
-
-  console.log(error);
-}
-
-    // Clear Form
->>>>>>> 22075725b887ba89c918bccc696b3e1f20434606
     setInvoice({
       ...invoice,
       items: invoice.items.filter((_, idx) => idx !== index),
