@@ -1,4 +1,4 @@
-const baseUrl = "http://127.0.0.1:5000";
+import baseUrl from "./api/baseUrl";
 
 async function request(path, options = {}) {
   const headers = options.headers || {};

@@ -1,7 +1,7 @@
 import axios from "axios";
+import baseUrl from "../api/baseUrl";
 
-const API =
-  "http://localhost:5000/api/invoices";
+const API = `${baseUrl}/api/invoices`;
 
 // Get All Invoices
 export const getInvoices =
